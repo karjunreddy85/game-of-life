@@ -1,0 +1,29 @@
+#Amazon Linux 2023
+#Install Jenkins with Java-17
+#Configure Java - 1.8 & maven - 3.5.4
+
+pipeline {
+    agent any
+
+    tools {
+        // Assuming you've configured Java 1.8 with the name 'Java-1.8' in Jenkins Global Tool Configuration
+        jdk 'Java-1.8'  // Correctly specifying JDK tool name in quotes
+        maven 'Maven-3.5.4'  // Correctly specifying Maven tool name in quotes
+    }
+
+    stages {
+        stage('Source Code CheckOut') {
+            steps {
+                git 'https://github.com/karjunreddy85/game-of-life'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Ensure the correct JAVA_HOME and MAVEN_HOME are set and Maven runs with Java 1.8
+                sh 'mvn clean install'
+            }
+        }
+
+    }
+}
